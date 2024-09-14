@@ -37,4 +37,19 @@ public class EmployeeRestController {
         theEmployee.setId(0); // force a save of new item (just in case id is passed in)
         return employeeService.save(theEmployee);
     }
+
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee theEmployee) {
+        return employeeService.save(theEmployee);
+    }
+
+    @DeleteMapping("/employees/{employeeId}")
+    public String deleteEmployee(@PathVariable int employeeId) {
+        Employee theEmployee = employeeService.findById(employeeId);
+        if (theEmployee == null) {
+            throw new RuntimeException("Employee id not found - " + employeeId);
+        }
+        employeeService.deleteById(employeeId);
+        return "Deleted employee with id - " + employeeId;
+    }
 }
